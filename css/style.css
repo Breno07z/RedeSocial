@@ -134,7 +134,7 @@ main{
 
 main .container{
   display: grid;
-  grid-template-columns: 18vh auto 20vw;
+  grid-template-columns: 18vW auto 20vw;
   column-gap: 2rem;
   position: relative;
 }   
@@ -443,4 +443,144 @@ main .container .left .profile{
   margin-left: 0.5rem;
 }
 
-  
+
+.right{
+  height: max-content;
+  position: sticky;
+  top: var(--sticky-top-right);
+  bottom: 0;      
+}   
+
+.right .messages{
+  background: var(--color-white);
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+}
+
+.right .messages .heading{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.right .messages i{
+  font-size: 1.4rem;
+} 
+
+.right .messages .search-bar{
+  display: flex;
+  margin-bottom: 1rem;
+} 
+
+.right .messages .category{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+} 
+
+.right .messages .category h6{
+  width: 100%;
+  text-align: center;
+  border-bottom: 4px solid var(--color-white);
+  padding-bottom: 5px;
+  font-size: 0.85rem;
+}
+
+.right .messages .category h6.active{
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.right .messages .message{
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: start;
+} 
+
+.right .messages .message:last-child{ 
+  margin: 0;
+} 
+
+.right .messages .message p{
+  font-size: 0.8rem;
+} 
+
+.right .messages .message .profile-photo{
+  position: relative;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.right .messages .message .profile-photo img{
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.right .messages .message .profile-photo .active{
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  border: 3px solid var(--color-white);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.right .messages .message .profile-photo .active.online{
+  background: var(--color-success);
+} 
+
+.right .messages .message .profile-photo .active.offline{
+  background: var(--color-danger);
+}
+
+.right .new-message{
+  background: var(--color-white);
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.right .new-message textarea{
+  width: 18rem;
+  height: 6rem;
+  border: none;
+  resize: none;
+  background: var(--color-light);
+  border-radius: var(--card-border-radius);
+  padding: 0.6rem;
+  color: var(--color-dark);
+  font-size: 0.8rem;
+}
+
+.right .new-message textarea::placeholder{
+  color: var(--color-gray);
+}
+
+.right .new-message textarea:focus{
+  outline: 0;
+}
+
+.right .new-message label{
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  gap: 1rem;    
+  cursor: pointer;
+  color: var(--color-primary);
+} 
+
+.right .new-message label i{
+  font-size: 2rem;
+  transform: rotate(-90deg);
+}
+
+.right .new-message label i:hover{
+  transform: rotate(-90deg) scale(1.2); 
+}
