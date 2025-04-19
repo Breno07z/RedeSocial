@@ -25,7 +25,7 @@
         <label class="btn btn-primary" for="create-post">Create</label>
         <div class="profile-container">
           <div class="profile-photo" id="profilePhoto">
-          <a href="{{ route('user.profile') }}" class="profile">
+          <a href="{{ route('usuario.perfil') }}" class="profile">
             <img src="{{ url('storage/' . auth()->user()->profile_image) }}" alt="Profile Photo"></a>
           </div>
           
@@ -67,7 +67,7 @@
       <!-- left side -->
       <div class="left">
 
-      <a href="{{ route('user.profile') }}" class="profile">
+      <a href="{{ route('usuario.perfil') }}" class="profile">
         
         <div class="profile-photo">
           <img src="{{ url('storage/' . auth()->user()->profile_image) }}" alt="Profile Photo">
@@ -244,8 +244,8 @@
               View all 277 comments
             </div>
           </div>
+          @endforeach
         </div>
-    @endforeach
       </div>  
       <!-- end of middle -->
 

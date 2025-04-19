@@ -96,26 +96,29 @@
 
         <!-- Conteúdo principal -->
         <div class="health-content">
-            <div class="post health-post">
-                
         @foreach ($posts as $post)
+            <div class="post health-post">
                 <div class="post-header">
-                    <img src="<?= (!empty($user->profile_image) ? $user->profile_image : 'images/profile-example.jpg' );?>" class="post-avatar">
+                    <img src="{{ url('storage/' . auth()->user()->profile_image) }}" class="post-avatar">
                     <div class="post-author">
-                        <strong>Dra. Kim Nakamura</strong>
-                        <span>@nakamura_kim · 2h</span>
+                        <strong>{{ auth()->user()->name }}</strong>
+                        <span>{{ auth()->user()->username }} · {{ $post->user->created_at }}</span>
                     </div>
                 </div>
                 <div class="post-content">
-                    <p>Novo estudo sobre tratamentos minimamente invasivos para arritmias cardíacas mostra resultados promissores com 92% de eficácia. Artigo completo disponível no meu portfólio.</p>
+                    <p>{{ $post->content }}</p>
+                    @if ($post->image)
+                    <div class="photo">
+                        <img src="{{ url('storage/' . $post->image) }}" alt="Imagem do post">
+                    </div>
+                    @endif
                     <div class="post-actions">
                         <button><i class="uil uil-comment-medical"></i> 12</button>
                         <button><i class="uil uil-share-alt"></i> Compartilhar</button>
                     </div>
                 </div>
             </div>
-            
-    @endforeach
+        @endforeach
         </div>
     </div>
 
@@ -135,10 +138,11 @@
         <div class="form-section">
           <label>Foto de Perfil</label>
           <div class="profile-picture-edit">
-            <img id="profileImagePreview" src=""<?=  url("storage/{$user->profile_image}");?>" alt="Imagem de Perfil" class="img-thumbnail mt-2" width="150">
+            <img id="profileImagePreview" src="<?=  url("storage/{$user->profile_image}");?>" alt="Imagem de Perfil" class="img-thumbnail mt-2" width="150">
             <label for="profileImageUpload" class="upload-btn">
               <i class="uil uil-camera"></i> Alterar
             </label>
+            <input type="file" class="form-control-file" id="profileImageUpload" name="profile_image" style="display:none;">
             <input type="file" id="profileImageUpload" accept="image/*" style="display:none;">
           </div>
         </div>

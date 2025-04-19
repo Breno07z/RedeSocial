@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -10,10 +12,31 @@ use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
 
+
+    public function paginaUsuario($id = null)
+    {
+        $usuario = $id ? User::find($id) : Auth::user();
+    
+        $posts = Post::with('user')->latest()->get(); // pega posts com os dados do user
+        if (!$usuario) {
+            return redirect()->back()->with('error', 'Usuário não encontrado.');
+        }
+    
+        return view('pages.perfil', ['user' => $usuario]);
+    }
+
     public function index()
     {
         $posts = Post::with('user')->latest()->get(); // pega posts com os dados do user
         return view('pages.home', compact('posts')); // 'home' é o nome do seu Blade
+    }
+
+    public function userpost()
+    {
+        $user = auth()->user();
+        $posts = Post::where('user_id', $user->id)->latest()->get();
+    
+        return view('pages.usuario.meuperfil', ['posts' => $posts, 'user' => $user]);
     }
     // Criar um novo post
     public function create()

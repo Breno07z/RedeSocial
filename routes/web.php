@@ -6,8 +6,6 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\PostController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
-
-
 Route::get('/registro', [AuthController::class, 'showRegistrationForm'])->name('pages.Registro');
 
 Route::get('/HealthConnect', function () {
@@ -27,14 +25,10 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/editar-perfil', [UsuarioController::class, 'edit'])->name('user.edit')->middleware('auth');
 Route::put('/atualizar-perfil', [UsuarioController::class, 'update'])->name('user.update')->middleware('auth');
 
-// Para mostrar o perfil do usuário logado
-Route::get('/meu-perfil', [AuthController::class, 'profile'])
-    ->name('user.profile')
-    ->middleware('auth');
-
 // Para mostrar o perfil de outro usuário
-Route::get('/perfil/{id}', [UsuarioController::class, 'paginaUsuario'])
-    ->name('user.show');
+Route::get('/perfil/{id}', [UsuarioController::class, 'paginaUsuario'])->name('user.show');
+
+Route::get('/meu-perfil', [PostController::class, 'userpost'])->name('usuario.perfil');
 
 Route::get('/perfil', [UsuarioController::class, 'paginaUsuario'])
     ->name('user.own')

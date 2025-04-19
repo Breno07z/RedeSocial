@@ -95,7 +95,7 @@ class AuthController extends Controller
             // return redirect()->route('pages.Home')->with('success', 'Login realizado com sucesso!');
             // Redireciona para a página de perfil do usuário autenticado
 
-            return redirect()->route('user.profile')->with('success', 'Login realizado com sucesso!');
+            return redirect()->route('usuario.perfil')->with('success', 'Login realizado com sucesso!');
         }
 
         // Se as credenciais forem inválidas, retorna um erro
