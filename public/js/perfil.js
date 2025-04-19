@@ -132,12 +132,6 @@ const medicalData = {
 
   // Simulação de dados do usuário (normalmente viriam de uma API)
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Obter dados do localStorage (simulando dados do registro)
-    const userData = JSON.parse(localStorage.getItem('healthConnectUser')) || {
-      fullName: "Kim Nakamura",
-      email: "kim.nakamura@example.com",
-      medicalInfo: null
-    };
   
     // 2. Carregar dados básicos do perfil
     document.querySelector('.profile-name').textContent = userData.fullName;
@@ -242,11 +236,6 @@ document.addEventListener('DOMContentLoaded', function() {
   simulateRegistrationIntegration();// Simulação de dados do usuário (normalmente viriam de uma API)
 document.addEventListener('DOMContentLoaded', function() {
   // 1. Obter dados do localStorage (simulando dados do registro)
-  const userData = JSON.parse(localStorage.getItem('healthConnectUser')) || {
-    fullName: "Kim Nakamura",
-    email: "kim.nakamura@example.com",
-    medicalInfo: null
-  };
 
   // 2. Carregar dados básicos do perfil
   document.querySelector('.profile-name').textContent = userData.fullName;
@@ -414,30 +403,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // edição
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Elementos do DOM
-  const editProfileBtn = document.getElementById('editProfileBtn');
   const editModal = document.getElementById('editProfileModal');
   const closeModalBtn = document.querySelector('.close-modal');
-  const cancelEditBtn = document.getElementById('cancelEdit');
-  const profileForm = document.getElementById('profileEditForm');
-  const profileUpload = document.getElementById('profileImageUpload');
-  const profilePreview = document.getElementById('profileImagePreview');
-  const profileImage = document.querySelector('.profile-picture img');
-  
-  // Elementos do perfil que serão atualizados
-  const profileName = document.querySelector('.profile-name');
-  const profileUsername = document.querySelector('.profile-username');
-  const profileBio = document.querySelector('.profile-bio');
-  const profileLocation = document.querySelector('.profile-details span:first-child');
   
   // Abrir modal de edição
   editProfileBtn.addEventListener('click', function() {
-    // Preencher formulário com valores atuais
-    document.getElementById('editName').value = profileName.textContent.split(' ')[0];
-    document.getElementById('editNickname').value = profileUsername.textContent;
-    document.getElementById('editBio').value = profileBio.textContent.split('\n')[0];
-    document.getElementById('editLocation').value = profileLocation.textContent.replace('📍', '').trim();
-    
     // Mostrar modal
     editModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
@@ -452,65 +422,6 @@ document.addEventListener('DOMContentLoaded', function() {
   closeModalBtn.addEventListener('click', closeModal);
   cancelEditBtn.addEventListener('click', closeModal);
   
-  // Preview da nova imagem de perfil
-  profileUpload.addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        profilePreview.src = event.target.result;
-        // Atualizar em tempo real
-        profileImage.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-  
-  // Atualizações em tempo real
-  document.getElementById('editName').addEventListener('input', function(e) {
-    const specialty = document.querySelector('.professional-title').textContent;
-    profileName.textContent = `${e.target.value} ${specialty}`;
-  });
-  
-  document.getElementById('editNickname').addEventListener('input', function(e) {
-    profileUsername.textContent = e.target.value;
-  });
-  
-  document.getElementById('editBio').addEventListener('input', function(e) {
-    profileBio.innerHTML = e.target.value;
-  });
-  
-  document.getElementById('editLocation').addEventListener('input', function(e) {
-    profileLocation.innerHTML = `<i class="uil uil-map-marker"></i> ${e.target.value}`;
-  });
-  
-  // Envio do formulário
-  profileForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Validar senha se foi alterada
-    const newPassword = document.getElementById('newPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    
-    if (newPassword && newPassword !== confirmPassword) {
-      alert('As senhas não coincidem!');
-      return;
-    }
-    
-    // Coletar dados do formulário
-    const formData = {
-      name: document.getElementById('editName').value,
-      nickname: document.getElementById('editNickname').value,
-      email: document.getElementById('editEmail').value,
-      bio: document.getElementById('editBio').value,
-      location: document.getElementById('editLocation').value,
-      currentPassword: document.getElementById('currentPassword').value,
-      newPassword: newPassword
-      // Adicionar a imagem se foi alterada
-    };
-    
-    // Aqui você enviaria os dados para o servidor
-    console.log('Dados atualizados:', formData);
     
     // Fechar modal
     closeModal();
@@ -537,6 +448,5 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 300);
     }, 3000);
   }
-});
 
 

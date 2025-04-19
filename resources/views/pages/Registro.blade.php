@@ -146,7 +146,7 @@
                     <textarea id="notes" name="notes" placeholder="Outras informações relevantes..."></textarea>
                 </div>
             </div>
-            
+            <p>Tem uma conta? <a href="{{ route('login') }}">Clique aqui pra voltar</a></p>
             <button type="submit">Criar conta</button>
         </form>
     </div>

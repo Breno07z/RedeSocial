@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
+
     public function paginaUsuario($id = null)
     {
         $usuario = $id ? User::find($id) : Auth::user();
@@ -17,7 +19,13 @@ class UsuarioController extends Controller
             return redirect()->back()->with('error', 'Usuário não encontrado.');
         }
     
-        return view('pages.perfil', ['user' => $usuario]);
+        // Pegando apenas os posts do usuário específico
+        $posts = $usuario->posts()->latest()->get();
+    
+        return view('pages.perfil', [
+            'user' => $usuario,
+            'posts' => $posts
+        ]);
     }
 
     

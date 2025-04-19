@@ -35,17 +35,14 @@
 
         <!-- Informações principais -->
         <div class="profile-info">
-            <h1 class="profile-name">{{ $user->name ?? 'Sem nome' }}<span class="professional-title">Cardiologista</span></h1>
-            <p class="profile-username">@nakamura_kim</p>
-            <p class="profile-bio">{{ $user->descricao ?? 'Sem descrição' }}
+            <h1 class="profile-name">{{ $user->name }}<span class="professional-title">Cardiologista</span></h1>
+            <p class="profile-username">{{ $user->username }}</p>
+            <p class="profile-bio">{{ $user->bio ?? 'Sem descrição' }}
                 <span class="medical-data-badge" id="medicalDataTag">
                     <i class="uil uil-file-medical-alt"></i> Dados médicos disponíveis
                 </span>
 
                 <button class="health-btn small" id="requestMedicalAccess">Solicitar Acesso</button>
-                <button class="health-btn edit-profile" id="editProfileBtn">
-                    <i class="uil uil-pen"></i> Editar Perfil
-                </button>
             </p>
 
             <!-- Seção de seguidores/seguindo -->
@@ -94,87 +91,40 @@
             <div class="nav-item"><i class="uil uil-comment-medical"></i> Respostas</div>
         </div>
 
+
         <!-- Conteúdo principal -->
         <div class="health-content">
+        @foreach ($posts as $post)
             <div class="post health-post">
                 <div class="post-header">
-                    <img src="images/doctor-avatar.jpg" alt="Dra. Kim Nakamura" class="post-avatar">
+                    <img src="<?=  url("storage/{$user->profile_image}");?>" class="post-avatar">
                     <div class="post-author">
-                        <strong>Dra. Kim Nakamura</strong>
-                        <span>@nakamura_kim · 2h</span>
+                        <strong>{{ $user->name }}</strong>
+                        <span>{{ $user->username }} · {{ $post->user->created_at }}</span>
                     </div>
                 </div>
                 <div class="post-content">
-                    <p>Novo estudo sobre tratamentos minimamente invasivos para arritmias cardíacas mostra resultados promissores com 92% de eficácia. Artigo completo disponível no meu portfólio.</p>
+                    <p>{{ $post->content }}</p>
+                    @if ($post->image)
+                    <div class="photo">
+                        <img src="{{ url('storage/' . $post->image) }}" alt="Imagem do post">
+                    </div>
+                    @endif
                     <div class="post-actions">
                         <button><i class="uil uil-comment-medical"></i> 12</button>
                         <button><i class="uil uil-share-alt"></i> Compartilhar</button>
                     </div>
                 </div>
             </div>
+        @endforeach
         </div>
     </div>
 
 
-    <!-- Modal de Edição de Perfil -->
-<div id="editProfileModal" class="edit-modal">
-    <div class="edit-modal-content">
-      <div class="edit-modal-header">
-        <h2><i class="uil uil-user-edit"></i> Editar Perfil</h2>
-        <button class="close-modal">&times;</button>
-      </div>
-      
-      <form id="profileEditForm" class="edit-form">
-        <!-- Seção de Foto -->
-        <div class="form-section">
-          <label>Foto de Perfil</label>
-          <div class="profile-picture-edit">
-            <img id="profileImagePreview" src="images/display-image-1.png" alt="Preview">
-            <label for="profileImageUpload" class="upload-btn">
-              <i class="uil uil-camera"></i> Alterar
-            </label>
-            <input type="file" id="profileImageUpload" accept="image/*" style="display:none;">
-          </div>
-        </div>
-        
-        <!-- Informações Básicas -->
-        <div class="form-section">
-          <label for="editName">Nome Completo</label>
-          <input type="text" id="editName" value="Dra. Kim Nakamura">
-          
-          <label for="editNickname">Nome de Usuário (@)</label>
-          <input type="text" id="editNickname" value="@nakamura_kim">
-          
-          <label for="editEmail">E-mail</label>
-          <input type="email" id="editEmail" value="kim.nakamura@example.com">
-          
-          <label for="editBio">Biografia</label>
-          <textarea id="editBio">Médica cardiologista com especialização em cirurgia cardíaca. Professora na Faculdade de Medicina da USP.</textarea>
-        </div>
-        
-        <!-- Localização -->
-        <div class="form-section">
-          <label for="editLocation">Localização</label>
-          <input type="text" id="editLocation" value="Hospital Albert Einstein, SP">
-        </div>
-        
-        <!-- Trocar Senha -->
-        <div class="form-section">
-          <label>Alterar Senha</label>
-          <input type="password" id="currentPassword" placeholder="Senha atual">
-          <input type="password" id="newPassword" placeholder="Nova senha">
-          <input type="password" id="confirmPassword" placeholder="Confirmar nova senha">
-        </div>
-        
-        <div class="form-actions">
-          <button type="button" class="health-btn secondary" id="cancelEdit">Cancelar</button>
-          <button type="submit" class="health-btn primary">Salvar Alterações</button>
-        </div>
-      </form>
     </div>
   </div>
     
 
-    <script src="js/perfil.js"></script>
+    <script src="{{ asset('js/perfil.js') }}"></script>
 </body>
 </html>
