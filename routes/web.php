@@ -7,8 +7,11 @@ use App\Http\Controllers\PostController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
-Route::get('/Registro', function () {
-    return view('pages.Registro');
+
+Route::get('/registro', [AuthController::class, 'showRegistrationForm'])->name('pages.Registro');
+
+Route::get('/HealthConnect', function () {
+    return view('pages.message');
 });
 
 Route::get('/explore', function () {

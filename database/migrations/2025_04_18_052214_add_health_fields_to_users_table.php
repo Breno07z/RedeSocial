@@ -12,7 +12,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('username')->unique();
             $table->date('birthDate')->nullable();
             $table->string('bloodType')->nullable();
             $table->text('allergies')->nullable();

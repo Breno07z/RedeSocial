@@ -7,14 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HealthConnect</title>
   <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
-  <link rel="stylesheet" href="css/login.css" />
+  <link rel="stylesheet" href="assets/login.css" />
 </head>
 
 <body>
-  <div class="loading">
-    <img class="logo__loading" src="images/LOGO.jpeg" alt="Carregando o Instagram">
-    <img class="logoname__loading" src="images/logoname-carregamento.png" alt="Meta">
-  </div>
   <div class="container">
     <div class="container__images">
       <img class="touchscreen" src="images/phones.png" alt="Telefones celulares interpostos" />
@@ -24,14 +20,19 @@
       <img class="carousel__image" src="images/display-image-4.png" alt="Carrossel de Imagens">
     </div>
     <div class="container__login">
+    <form  id="loginForm" action="/login" method="POST">
+                @csrf
+
       <div class="login__signin">
         <img class="instagram__logo" src="images/instagram-logo.png" alt="Instagram" />
-        <input autocomplete="off" type="email" id="user" required />
+        <input name="email" type="email" id="user" placeholder="Coloque seu email" required>
         <span class="email__label">Telefone, nome de usuário ou e-mail</span>
-        <input autocomplete="off" type="password" id="password" required />
+        <input name="password" type="password" id="password" placeholder="Coloque sua senha" required>
         <span class="password__label">Senha</span>
         <span class="show">Mostrar</span>
-        <button id="submit" type="submit">Entrar</button>
+        <button type="submit" class="login-btn">Entrar <span class="icon">⮞</span></button>
+        </form>
+        
         <div class="separator">
           <span class="separator__ou">OU</span>
         </div>
@@ -51,7 +52,7 @@
         </div>
       </div>
       <div class="login__signup">
-        <span>Não tem uma conta? <a href="#">Cadastre-se</a></span>
+        <span>Não tem uma conta? <a href="{{ route('pages.Registro')}}">Cadastre-se</a></span>
       </div>
       <div class="login__getapp">
         <div class="getapp__call">
@@ -96,7 +97,6 @@
       <div class="allrights">
         © <span id="current-year"></span> HealthConnect
       </div>
-
     </div>
   </footer>
 
@@ -105,7 +105,7 @@
     document.getElementById('current-year').textContent = new Date().getFullYear();
   </script>
 
-  <script src="js/login.js"></script>
+  <script src="{{ asset('js/login.js') }}"></script>
 </body>
 
 </html>

@@ -35,9 +35,9 @@
 
         <!-- Informações principais -->
         <div class="profile-info">
-            <h1 class="profile-name">{{ $user->name ?? 'Sem nome' }}<span class="professional-title">Cardiologista</span></h1>
-            <p class="profile-username">@nakamura_kim</p>
-            <p class="profile-bio">{{ $user->descricao ?? 'Sem descrição' }}
+            <h1 class="profile-name">{{ $user->name }}<span class="professional-title">Cardiologista</span></h1>
+            <p class="profile-username">{{ $user->username }}</p>
+            <p class="profile-bio">{{ $user->bio ?? 'Sem descrição' }}
                 <span class="medical-data-badge" id="medicalDataTag">
                     <i class="uil uil-file-medical-alt"></i> Dados médicos disponíveis
                 </span>
@@ -175,6 +175,6 @@
   </div>
     
 
-    <script src="js/perfil.js"></script>
+    <script src="{{ asset('js/perfil.js') }}"></script>
 </body>
 </html>

@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <title>HealthConnect</title>
 </head>
 <body>
@@ -26,8 +25,7 @@
         <label class="btn btn-primary" for="create-post">Create</label>
         <div class="profile-container">
           <div class="profile-photo" id="profilePhoto">
-            
-        <a href="{{ route('user.profile') }}" class="profile">
+          <a href="{{ route('user.profile') }}" class="profile">
             <img src="{{ url('storage/' . auth()->user()->profile_image) }}" alt="Profile Photo"></a>
           </div>
           
@@ -69,18 +67,18 @@
       <!-- left side -->
       <div class="left">
 
-        <a href="{{ route('user.profile') }}" class="profile">
+      <a href="{{ route('user.profile') }}" class="profile">
         
-          <div class="profile-photo">
-            <img src="{{ url('storage/' . auth()->user()->profile_image) }}" alt="Profile Photo">
-          </div>
-          <div class="handle">
-            <h4>{{ auth()->user()->name }}</h4>
-            <p class="text-muted">
-            {{ auth()->user()->username}}
-            </p>
-          </div>
-        </a>
+        <div class="profile-photo">
+          <img src="{{ url('storage/' . auth()->user()->profile_image) }}" alt="Profile Photo">
+        </div>
+        <div class="handle">
+          <h4>{{ auth()->user()->name }}</h4>
+          <p class="text-muted">
+          {{ auth()->user()->username}}
+          </p>
+        </div>
+      </a>
 
         <!-- sidebar -->
         <div class="sidebar">
@@ -193,45 +191,62 @@
         <form action="{{ route('posts.store') }}" method="POST" class="create-post" enctype="multipart/form-data">
           @csrf
           <div class="profile-photo">
-            <img src="{{ url('storage/' . auth()->user()->profile_image) }}" alt="Profile Photo">
+          <img src="{{ auth()->user()->profile_image ? url('storage/' . auth()->user()->profile_image) : asset('public/images/profile-example.jpg') }}" alt="Profile Photo">
           </div>
           <input type="text" name="content" placeholder="What's on your mind, {{ auth()->user()->name }}?" id="create-post-input">
-          <label for="imageUpload" class="upload-circle">
-          <i class="material-icons" style="font-size:16px">add_to_photos</i>
-          </label>
-          <input type="file" name="image" id="imageUpload" hidden>
           <input type="submit" value="Post" class="btn btn-primary">
           </form>
         <!-- end of create post -->
 
         <!-- feeds -->
         <div class="feeds">
-    @foreach ($posts as $post)
-        <div class="feed">
+        @foreach ($posts as $post)
+          <div class="feed">
             <div class="head">
-                <div class="user">
-                    <div class="profile-photo">
+              <div class="user">
+              <div class="profile-photo">
                         <img src="{{ url('storage/' . $post->user->profile_image) }}" alt="Foto de perfil">
                     </div>
-                    <div class="info">
-                        <h3>{{ $post->user->name }}</h3>
-                        <small>{{ $post->created_at->diffForHumans() }}</small>
-                    </div>
+                <div class="info">
+                  <h3>{{ $post->user->name }}</h3>
+                  <small>New York</small>
                 </div>
+              </div>
+              <span class="edit">
+                <i class="uil uil-ellipsis-h"></i>
+              </span>
             </div>
-
-            <div class="caption">
-                <p>{{ $post->content }}</p>
-            </div>
-
             @if ($post->image)
                 <div class="photo">
                     <img src="{{ url('storage/' . $post->image) }}" alt="Imagem do post">
                 </div>
             @endif
+            <div class="action-buttons">
+              <div class="interaction-buttons">
+                <span><i class="uil uil-heart"></i></span>
+                <span><i class="uil uil-comment-dots"></i></span>
+                <span><i class="uil uil-share-alt"></i></span>
+              </div>
+              <div class="bookmark">
+                <span><i class="uil uil-bookmark-full"></i></span>
+              </div>
+            </div>
+            <div class="liked-by">
+              <span><img src="images/profile-10.jpg" alt="Profile Photo"></span>
+              <span><img src="images/profile-4.jpg" alt="Profile Photo"></span>
+              <span><img src="images/profile-5.jpg" alt="Profile Photo"></span>
+              <p>liked by <strong>John Doe</strong> and <strong>2,453 others</strong></p>
+            </div>
+            <div class="caption"> 
+              <p><strong>{{ $post->user->name }}</strong> {{ $post->content }}<span class="hashtag">#lifestyle</span></p>
+            </div>
+            <div class="comments text-muted">
+              View all 277 comments
+            </div>
+          </div>
         </div>
     @endforeach
-</div>
+      </div>  
       <!-- end of middle -->
 
       <!-- right side -->
@@ -414,6 +429,6 @@
     </div>
   </div>
 
-  <script src="js/index.js"></script>
+  <script src="{{ asset('js/index.js') }}"></script>
 </body>
 </html>

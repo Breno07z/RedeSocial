@@ -22,7 +22,7 @@
         <div class="profile-header">
             <img src="<?=  url("storage/{$user->banner_image}");?>" alt="">
             <div class="profile-picture">
-            <img src="<?=  url("storage/{$user->profile_image}");?>" alt="">
+            <img src="{{ url('storage/' . auth()->user()->profile_image) }}" alt="">
                 <span class="professional-badge">
                     <i class="uil uil-check-circle"></i> Verificado
                 </span>
@@ -35,9 +35,9 @@
 
         <!-- Informações principais -->
         <div class="profile-info">
-            <h1 class="profile-name">{{ $user->name ?? 'Sem nome' }}<span class="professional-title">Cardiologista</span></h1>
-            <p class="profile-username">@nakamura_kim</p>
-            <p class="profile-bio">{{ $user->descricao ?? 'Sem descrição' }}
+            <h1 class="profile-name">{{ auth()->user()->name }}<span class="professional-title">Cardiologista</span></h1>
+            <p class="profile-username">{{ auth()->user()->username }}</p>
+            <p class="profile-bio">{{ auth()->user()->bio ?? 'Sem descrição' }}
                 <span class="medical-data-badge" id="medicalDataTag">
                     <i class="uil uil-file-medical-alt"></i> Dados médicos disponíveis
                 </span>
@@ -97,8 +97,10 @@
         <!-- Conteúdo principal -->
         <div class="health-content">
             <div class="post health-post">
+                
+        @foreach ($posts as $post)
                 <div class="post-header">
-                    <img src="images/doctor-avatar.jpg" alt="Dra. Kim Nakamura" class="post-avatar">
+                    <img src="<?= (!empty($user->profile_image) ? $user->profile_image : 'images/profile-example.jpg' );?>" class="post-avatar">
                     <div class="post-author">
                         <strong>Dra. Kim Nakamura</strong>
                         <span>@nakamura_kim · 2h</span>
@@ -112,6 +114,8 @@
                     </div>
                 </div>
             </div>
+            
+    @endforeach
         </div>
     </div>
 
@@ -124,12 +128,14 @@
         <button class="close-modal">&times;</button>
       </div>
       
-      <form id="profileEditForm" class="edit-form">
+      <form action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
         <!-- Seção de Foto -->
         <div class="form-section">
           <label>Foto de Perfil</label>
           <div class="profile-picture-edit">
-            <img id="profileImagePreview" src="images/display-image-1.png" alt="Preview">
+            <img id="profileImagePreview" src=""<?=  url("storage/{$user->profile_image}");?>" alt="Imagem de Perfil" class="img-thumbnail mt-2" width="150">
             <label for="profileImageUpload" class="upload-btn">
               <i class="uil uil-camera"></i> Alterar
             </label>
@@ -139,17 +145,17 @@
         
         <!-- Informações Básicas -->
         <div class="form-section">
-          <label for="editName">Nome Completo</label>
-          <input type="text" id="editName" value="Dra. Kim Nakamura">
+        <label for="name">Nome:</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}" required>
           
           <label for="editNickname">Nome de Usuário (@)</label>
-          <input type="text" id="editNickname" value="@nakamura_kim">
+          <input type="text" id="editNickname" value="{{ old('username', $user->username) }}">
           
-          <label for="editEmail">E-mail</label>
-          <input type="email" id="editEmail" value="kim.nakamura@example.com">
+          <label for="email">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
           
           <label for="editBio">Biografia</label>
-          <textarea id="editBio">Médica cardiologista com especialização em cirurgia cardíaca. Professora na Faculdade de Medicina da USP.</textarea>
+          <input type="bio" class="form-control" id="bio" name="bio" value="{{ old('bio', $user->bio) }}">
         </div>
         
         <!-- Localização -->
@@ -175,6 +181,6 @@
   </div>
     
 
-    <script src="js/perfil.js"></script>
+    <script src="{{ asset('js/perfil.js') }}"></script>
 </body>
 </html>
